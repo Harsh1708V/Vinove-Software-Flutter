@@ -1,97 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:location_tracking_app/screens/location_screen.dart';
-import 'package:geolocator/geolocator.dart';
+import 'location_screen.dart';
 
-class AttendanceScreen extends StatefulWidget {
-  @override
-  _AttendanceScreenState createState() => _AttendanceScreenState();
-}
+class AttendancePage extends StatelessWidget {
+  const AttendancePage({super.key});
 
-class _AttendanceScreenState extends State<AttendanceScreen> {
-  List<Map<String, dynamic>> members = [
-    {'name': 'Mansi Varshney', 'status': 'Not Set', 'location': null},
-    {'name': 'Arya Gupta', 'status': 'Not Set', 'location': null},
-    {'name': 'Harsh Waibhav', 'status': 'Not Set', 'location': null},
-    {'name': 'Kanika Kasana', 'status': 'Not Set', 'location': null},
-    {'name': 'Niyati Kalia', 'status': 'Not Set', 'location': null},
+  final List<Map<String, dynamic>> _members = const [
+    {'name': 'Harsh', 'id': 1},
+    {'name': 'Stark', 'id': 2},
+    {'name': 'Mansi', 'id': 3},
+    {'name': 'Kanika', 'id': 4},
+    {'name': 'Niyati', 'id': 5},
   ];
 
-  Future<void> _updateAttendance(int index, String status) async {
-    setState(() {
-      members[index]['status'] = status;
-    });
+  void _showMemberDetails(BuildContext context, String name) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Details for $name')),
+    );
+  }
 
-    if (status == 'Present') {
-      try {
-        Position position = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high,
-        );
-        setState(() {
-          members[index]['location'] = position;
-        });
-      } catch (e) {
-        print("Error getting location: $e");
-        // Handle the error, maybe show a dialog to the user
-      }
-    } else {
-      setState(() {
-        members[index]['location'] = null;
-      });
-    }
+  void _navigateToLocationPage(BuildContext context, Map<String, dynamic> member) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LocationPage(member: member),
+      ),
+    );
+  }
+
+  Widget _buildMemberTile(BuildContext context, Map<String, dynamic> member) {
+    return ListTile(
+      title: Text(member['name']),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          IconButton(
+            icon: const Icon(Icons.info),
+            onPressed: () => _showMemberDetails(context, member['name']),
+          ),
+          IconButton(
+            icon: const Icon(Icons.location_on),
+            onPressed: () => _navigateToLocationPage(context, member),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Attendance'),
-      ),
+      appBar: AppBar(title: const Text('Attendance')),
       body: ListView.builder(
-        itemCount: members.length,
+        itemCount: _members.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(members[index]['name']),
-            subtitle: Text('Status: ${members[index]['status']}'),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                DropdownButton<String>(
-                  value: members[index]['status'],
-                  onChanged: (String? newValue) {
-                    if (newValue != null) {
-                      _updateAttendance(index, newValue);
-                    }
-                  },
-                  items: <String>['Not Set', 'Present', 'Absent']
-                    .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                ),
-                IconButton(
-                  icon: Icon(Icons.location_on),
-                  onPressed: members[index]['location'] != null
-                    ? () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LocationScreen(
-                              memberName: members[index]['name'],
-                              initialPosition: members[index]['location'],
-                            ),
-                          ),
-                        );
-                      }
-                    : null,
-                ),
-              ],
-            ),
-          );
+          final member = _members[index];
+          return _buildMemberTile(context, member);
         },
       ),
     );
   }
 }
-

@@ -5,13 +5,13 @@ class RouteScreen extends StatefulWidget {
   final String startLocation;
   final String stopLocation;
 
-  RouteScreen({required this.startLocation, required this.stopLocation});
+  const RouteScreen({super.key, required this.startLocation, required this.stopLocation});
 
   @override
-  _RouteScreenState createState() => _RouteScreenState();
+  RouteScreenState createState() => RouteScreenState(); // Remove the underscore
 }
 
-class _RouteScreenState extends State<RouteScreen> {
+class RouteScreenState extends State<RouteScreen> { // Remove the underscore
   late GoogleMapController mapController;
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
@@ -23,7 +23,7 @@ class _RouteScreenState extends State<RouteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Route Details'),
+        title: const Text('Route Details'),
       ),
       body: Column(
         children: [
@@ -34,8 +34,8 @@ class _RouteScreenState extends State<RouteScreen> {
               children: [
                 Text('Start Location: ${widget.startLocation}'),
                 Text('Stop Location: ${widget.stopLocation}'),
-                Text('Total KMs: 10 km'),
-                Text('Total Duration: 30 minutes'),
+                const Text('Total KMs: 10 km'),
+                const Text('Total Duration: 30 minutes'),
               ],
             ),
           ),
@@ -46,9 +46,8 @@ class _RouteScreenState extends State<RouteScreen> {
                 target: _center,
                 zoom: 11.0,
               ),
-              // The API key is now set in the AndroidManifest.xml and AppDelegate.swift files
               polylines: {
-                Polyline(
+                const Polyline(
                   polylineId: PolylineId('route'),
                   color: Colors.blue,
                   points: [
@@ -60,8 +59,8 @@ class _RouteScreenState extends State<RouteScreen> {
               },
               markers: {
                 Marker(
-                  markerId: MarkerId('stop1'),
-                  position: LatLng(45.531563, -122.687433),
+                  markerId: const MarkerId('stop1'),
+                  position: const LatLng(45.531563, -122.687433),
                   icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
                 ),
               },
@@ -72,4 +71,3 @@ class _RouteScreenState extends State<RouteScreen> {
     );
   }
 }
-

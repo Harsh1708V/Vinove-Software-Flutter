@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:location_tracking_app/screens/attendance_screen.dart';
+import 'screens/attendance_screen.dart';
+import 'home/home_screen.dart';
+
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  Map<String, WidgetBuilder> _buildRoutes() {
+    return {
+      '/': (context) => const HomePage(),
+      '/attendance': (context) => const AttendancePage(),
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Location Tracking App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: AttendanceScreen(),
+      initialRoute: '/',
+      routes: _buildRoutes(),
     );
   }
 }
-
