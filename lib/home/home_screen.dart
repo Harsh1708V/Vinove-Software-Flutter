@@ -29,106 +29,52 @@ class HomePage extends StatelessWidget {
 
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: [
-          _buildDrawerHeader(),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                _buildDrawerItem(
-                  context,
-                  icon: Icons.timer,
-                  title: 'Timer',
-                  route: '/',
-                ),
-                _buildDrawerItem(
-                  context,
-                  icon: Icons.calendar_today,
-                  title: 'Attendance',
-                  route: '/attendance',
-                ),
-                _buildDrawerItem(
-                  context,
-                  icon: Icons.bar_chart,
-                  title: 'Activity',
-                  route: '/activity',
-                ),
-              ],
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.blue,
             ),
+            child: Text(
+              'Drawer Header',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+              ),
+            ),
+          ),
+          ListTile(
+            leading: const Icon(Icons.home),
+            title: const Text('Home'),
+            onTap: () {
+              Navigator.pushNamed(context, '/');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.check),
+            title: const Text('Attendance'),
+            onTap: () {
+              Navigator.pushNamed(context, '/attendance');
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.accessibility),
+            title: const Text('Activity'),
+            onTap: () {
+              Navigator.pushNamed(context, '/activity');
+            },
           ),
         ],
       ),
     );
   }
 
-  Widget _buildDrawerHeader() {
-    return const DrawerHeader(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF4a39b6), Color(0xFF6a4dbb)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Row(
-        children: [
-          CircleAvatar(
-            radius: 30,
-            backgroundColor: Colors.white,
-            child: Icon(
-              Icons.person,
-              size: 40,
-              color: Color(0xFF4a39b6),
-            ),
-          ),
-          SizedBox(width: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                'Cameron Williamson',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                'cameronwilliamson@gmail.com',
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildDrawerItem(BuildContext context,
-      {required IconData icon,
-      required String title,
-      required String route}) {
-    return ListTile(
-      leading: Icon(icon, color: Colors.grey),
-      title: Text(
-        title,
-        style: const TextStyle(color: Colors.grey),
-      ),
-      onTap: () {
-        Navigator.pushNamed(context, route); // Navigate to the specified route
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(title: const Text('ATTENDANCE')),
       drawer: _buildDrawer(context),
       body: const Center(child: Text('Home Page Content')),
     );

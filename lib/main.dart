@@ -17,8 +17,7 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const HomePage(),
-        '/attendance': (context) =>
-            const AttendancePage(), // Updated route to use the correct AttendancePage
+        '/attendance': (context) => const AttendancePage(), // Updated route to use the correct AttendancePage
       },
     );
   }
@@ -99,6 +98,50 @@ class HomePage extends StatelessWidget {
                   isSelected: false,
                   route: null, // No navigation for this item
                 ),
+                const Divider(color: Colors.grey, thickness: 1), //Thin Line
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.group,
+                  title: 'Report to Organization',
+                  isSelected: false,
+                  route: null, // No navigation for this item
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.pattern,
+                  title: 'Change Password',
+                  isSelected: false,
+                  route: null, // No navigation for this item
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.logout,
+                  title: 'Logout',
+                  isSelected: false,
+                  route: null, // No navigation for this item
+                ),
+                const Divider(color: Colors.grey, thickness: 1), //Thin Line
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.contact_support,
+                  title: 'FAQ & Help',
+                  isSelected: false,
+                  route: null, // No navigation for this item
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.description,
+                  title: 'Privacy Policy',
+                  isSelected: false,
+                  route: null, // No navigation for this item
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.update,
+                  title: 'Version: 2. 10(1)',
+                  isSelected: false,
+                  route: null, // No navigation for this item
+                ),
               ],
             ),
           ),
@@ -169,7 +212,7 @@ class HomePage extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: isSelected ? const Color(0xFF4a39b6) : Colors.grey,
+          color: isSelected ? const Color(0xFF4a39b6) : Colors.black,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -184,7 +227,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(
+        title: const Text(
+          'ATTENDANCE',
+          style: TextStyle(color: Colors.white),
+        ),
+        backgroundColor: const Color(0xFF4a39b6), // Change the color of the app bar
+        iconTheme: const IconThemeData(color: Colors.white), // Change the hamburger menu icon to white
+      ),
       drawer: _buildDrawer(context),
       body: const Center(child: Text('Home Page Content')),
     );
