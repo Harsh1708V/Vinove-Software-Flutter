@@ -108,8 +108,8 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildDrawerHeader() {
-    return DrawerHeader(
-      decoration: const BoxDecoration(
+    return const DrawerHeader(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [Color(0xFF4a39b6), Color(0xFF6a4dbb)],
           begin: Alignment.topLeft,
@@ -127,11 +127,11 @@ class HomePage extends StatelessWidget {
               color: Color(0xFF4a39b6),
             ),
           ),
-          const SizedBox(width: 16),
+          SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Text(
                 'Cameron Williamson',
                 style: TextStyle(
