@@ -1,21 +1,108 @@
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Navigation Example',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      // Define routes for navigation
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/attendance': (context) => const AttendancePage(),
+        '/activity': (context) => const ActivityPage(),
+      },
+    );
+  }
+}
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
-      child: ListView(
+      child: Column(
         children: [
-          _buildDrawerItem(
-            context,
-            title: 'Attendance',
-            route: '/attendance',
+          _buildDrawerHeader(),
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.zero,
+              children: [
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.timer,
+                  title: 'Timer',
+                  route: '/',
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.calendar_today,
+                  title: 'Attendance',
+                  route: '/attendance',
+                ),
+                _buildDrawerItem(
+                  context,
+                  icon: Icons.bar_chart,
+                  title: 'Activity',
+                  route: '/activity',
+                ),
+              ],
+            ),
           ),
-          _buildDrawerItem(
-            context,
-            title: 'History',
-            route: '/',
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerHeader() {
+    return const DrawerHeader(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF4a39b6), Color(0xFF6a4dbb)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+      ),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 30,
+            backgroundColor: Colors.white,
+            child: Icon(
+              Icons.person,
+              size: 40,
+              color: Color(0xFF4a39b6),
+            ),
+          ),
+          SizedBox(width: 16),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Cameron Williamson',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                'cameronwilliamson@gmail.com',
+                style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -23,83 +110,51 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildDrawerItem(BuildContext context,
-      {required String title, required String route}) {
+      {required IconData icon,
+      required String title,
+      required String route}) {
     return ListTile(
-      title: Text(title),
-      onTap: () => Navigator.pushNamed(context, route),
-    );
-  }
-
-  Widget _buildFloatingActionButton(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor: Colors.teal, // Change this to your desired color
-      elevation: 10.0, // Adjust shadow depth if needed
-      onPressed: () {
-        // Show the popup when the button is clicked
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Options'),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Text('Choose an option below:'),
-                  const SizedBox(height: 16.0), // Add spacing
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context); // Close the popup
-                      // Add your FAQ logic here
-                    },
-                    child: const Text('FAQ'),
-                  ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Close the popup
-                  },
-                  child: const Text('Cancel'),
-                ),
-              ],
-            );
-          },
-        );
+      leading: Icon(icon, color: Colors.grey),
+      title: Text(
+        title,
+        style: const TextStyle(color: Colors.grey),
+      ),
+      onTap: () {
+        Navigator.pushNamed(context, route); // Navigate to the specified route
       },
-      child: const Icon(Icons.add), // Move child to the end
-    );
-  }
-
-  Widget _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.villa),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.question_answer),
-          label: 'Messages',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Profile',
-        ),
-      ],
-      selectedItemColor: Colors.teal,
-      unselectedItemColor: Colors.grey,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('')),
+      appBar: AppBar(title: const Text('Home')),
       drawer: _buildDrawer(context),
-      body: const Center(child: Text('Home Page')),
-      floatingActionButton: _buildFloatingActionButton(context),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      body: const Center(child: Text('Home Page Content')),
+    );
+  }
+}
+
+class AttendancePage extends StatelessWidget {
+  const AttendancePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Attendance')),
+      body: const Center(child: Text('Attendance Page Content')),
+    );
+  }
+}
+
+class ActivityPage extends StatelessWidget {
+  const ActivityPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Activity')),
+      body: const Center(child: Text('Activity Page Content')),
     );
   }
 }
