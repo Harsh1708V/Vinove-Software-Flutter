@@ -229,7 +229,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'ATTENDANCE',
+          'Home',
           style: TextStyle(color: Colors.white),
         ),
         backgroundColor: const Color(0xFF4a39b6), // Change the color of the app bar
